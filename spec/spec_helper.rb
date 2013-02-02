@@ -40,7 +40,8 @@ Spork.prefork do
   end
 end
 
+#THIS LINE IS VERY IMPORTANT!
 Spork.each_run do
   # This code will be run each time you run your specs.
-
+  SampleApp::Application.reload_routes!
 end
