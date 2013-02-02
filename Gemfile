@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 gem 'bootstrap-sass', '2.1'
 gem 'pg', '0.12.2'
+gem 'bcrypt-ruby', '3.0.1' #state-of-the-art encryption for password-digest
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,6 +13,10 @@ group :development, :test do
 	gem 'guard-rspec', '1.2.1'
 	gem 'guard-spork', :github => 'guard/guard-spork'
 	gem 'spork', '0.9.2'
+end
+
+group :development do
+	gem 'annotate', '2.5.0' #used to annotate Models 'bundle exec annotate'
 end
 
 # Gems used only for assets and not required
