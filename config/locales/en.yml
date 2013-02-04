@@ -3,3 +3,10 @@
 
 en:
   hello: "Hello world"
+
+#change the error message about passwords to something more readable
+en:
+  activerecord:
+   attributes:
+    user:
+     password_digest: "Password"
