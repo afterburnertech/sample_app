@@ -4,6 +4,9 @@ gem 'rails', '3.2.11'
 gem 'bootstrap-sass', '2.1'
 gem 'pg', '0.12.2'
 gem 'bcrypt-ruby', '3.0.1' #state-of-the-art encryption for password-digest
+gem 'faker', '1.0.1' #create sample users
+gem 'will_paginate', '3.0.3' #paginate users
+gem 'bootstrap-will_paginate', '0.0.6' #bootstrap pagination styles
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
