@@ -18,6 +18,16 @@ module SessionsHelper
 		user == current_user
 	end
 
+    def signed_in_user
+      unless signed_in?
+        #if a valid user tries to access a page, but hasn't signed in yet, 
+        #store the page and ask them to sign in
+        store_location
+        #otherwise redirect to the sign in page
+        redirect_to signin_url, notice: "Please sign in."
+      end
+    end
+
 	def signed_in?
 		!current_user.nil?
 	end

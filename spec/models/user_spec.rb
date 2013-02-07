@@ -58,6 +58,17 @@ describe User do
         Micropost.find_by_id(micropost.id).should be_nil
       end
     end
+
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+      end
+
+      #include? simply checks if an array includes the given element
+      its(:feed) { should include(newer_micropost) }
+      its(:feed) { should include(older_micropost) }
+      its(:feed) { should_not include(unfollowed_post) }
+    end
   end
 
   describe "accessible attributes" do

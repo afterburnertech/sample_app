@@ -67,16 +67,6 @@ class UsersController < ApplicationController
 
   private
 
-    def signed_in_user
-      unless signed_in?
-        #if a valid user tries to access a page, but hasn't signed in yet, 
-        #store the page and ask them to sign in
-        store_location
-        #otherwise redirect to the sign in page
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
-
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
