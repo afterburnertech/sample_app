@@ -7,6 +7,7 @@ gem 'bcrypt-ruby', '3.0.1' #state-of-the-art encryption for password-digest
 gem 'faker', '1.0.1' #create sample users
 gem 'will_paginate', '3.0.3' #paginate users
 gem 'bootstrap-will_paginate', '0.0.6' #bootstrap pagination styles
+gem 'jquery-rails', '2.0.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -16,9 +17,6 @@ group :development, :test do
 	gem 'guard-rspec', '1.2.1'
 	gem 'guard-spork', :github => 'guard/guard-spork'
 	gem 'spork', '0.9.2'
-end
-
-group :development do
 	gem 'annotate', '2.5.0' #used to annotate Models 'bundle exec annotate'
 end
 
@@ -30,11 +28,10 @@ group :assets do
   gem 'uglifier', '1.2.3'
 end
 
-gem 'jquery-rails', '2.0.2'
-
 group :test do
 	gem 'capybara', '1.1.2'
 	gem 'rb-fsevent', '0.9.1', :require => false
+	gem 'database_cleaner', '0.7.0'
 	gem 'growl', '1.0.3'
 	gem 'factory_girl_rails', '4.1.0' #definte user objects and insert them in db
 end

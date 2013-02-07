@@ -4,6 +4,24 @@ describe "User pages" do
 
 	subject { page }
 
+	describe "navigation links" do
+
+		let(:user) { FactoryGirl.create(:user) }
+
+		before { sign_in user }
+
+		describe "when a user is not logged in" do
+
+			before do
+				sign_out
+				visit root_path
+			end
+
+			it { should_not have_link('Profile') }
+			it { should_not have_link('Settings') }
+		end
+	end
+
 	describe "index" do
 
 		let(:user) { FactoryGirl.create(:user) }
@@ -90,7 +108,7 @@ describe "User pages" do
 				fill_in "Name", 		with: "Example User"
 				fill_in "Email", 		with: "user@example.com"
 				fill_in "Password", 	with: "foobar"
-				fill_in "Confirmation", with: "foobar"
+				fill_in "Confirm Password", with: "foobar"
 			end	
 
 			it "should create a user" do
@@ -132,7 +150,7 @@ describe "User pages" do
 	    	let(:new_email) { "new@example.com" }
 	    	before do
 	    		fill_in "Name",				with: new_name
-	    		fill_in "Email",				with: new_email
+	    		fill_in "Email",			with: new_email
 	    		fill_in "Password",			with: user.password
 	    		fill_in "Confirm Password",	with: user.password
 	    		click_button "Save changes"
