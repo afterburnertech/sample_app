@@ -14,6 +14,7 @@
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation #gettor/settors
   has_secure_password #automagic create and secure new users
+  has_many :microposts, dependent: :destroy #destroy user microposts when user is destroyed
 
   #before_save { |user| user.email = email.downcase }
   before_save { self.email.downcase! }

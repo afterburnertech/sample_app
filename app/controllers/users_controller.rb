@@ -13,6 +13,8 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    #use pageinate to pull out the desired page of posts
+    @microposts = @user.microposts.paginate(page: params[:page]) 
   end
 
   def new
