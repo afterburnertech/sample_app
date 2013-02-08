@@ -19,4 +19,16 @@ class Micropost < ActiveRecord::Base
 
   #DESC is SQL for descending
   default_scope order: 'microposts.created_at DESC'
+
+  #SELECT * FROM microposts
+  #WHERE user_id IN (SELECT followed_id FROM relationships
+  	#WHERE followed_id = 1) OR user_id = 1 
+#sub select pushes the weight of the query into the database and is efficient
+#for a large number of users
+  def self.from_users_followed_by(user)
+    followed_user_ids = "SELECT followed_id FROM relationships
+                         WHERE follower_id = :user_id"
+    where("user_id IN (#{followed_user_ids}) OR user_id = :user_id", 
+          user_id: user.id)
+  end
 end
