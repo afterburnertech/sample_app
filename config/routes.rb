@@ -1,5 +1,9 @@
 SampleApp::Application.routes.draw do
-  resources :users #REST-style URI for Users Resource
+  resources :users do#REST-style URI for Users Resource
+    member do
+      get :following, :followers
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
 

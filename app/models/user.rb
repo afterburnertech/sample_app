@@ -9,12 +9,21 @@
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
+#  admin           :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation #gettor/settors
   has_secure_password #automagic create and secure new users
   has_many :microposts, dependent: :destroy #destroy user microposts when user is destroyed
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  #here we want to use user.followed_users instead of user.followeds which is awkward
+  has_many :followed_users, through: :relationships, source: :followed
+  #followers relationship gets built through the reverse relationship
+  has_many :reverse_relationships, foreign_key: "followed_id",
+                                   class_name:  "Relationship",
+                                   dependent:   :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
 
   #before_save { |user| user.email = email.downcase }
   before_save { self.email.downcase! }
@@ -27,10 +36,22 @@ class User < ActiveRecord::Base
   validates :password, length: { minimum: 6 } #presence: true could cause error duplication (see locales/en.yml)
   validates :password_confirmation, presence: true
 
-    def feed
-      #This is preliminary.  See "Following users" for the full implementation.
-      Micropost.where("user_id = ?", id) #the '?' makes sure the variable id is escaped before SQL query
-    end
+  def feed
+    #This is preliminary.  See "Following users" for the full implementation.
+    Micropost.where("user_id = ?", id) #the '?' makes sure the variable id is escaped before SQL query
+  end
+
+  def following?(other_user)
+    relationships.find_by_followed_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.find_by_followed_id(other_user.id).destroy
+  end
 
   private
   
